@@ -8,16 +8,16 @@
     "withGlobalTauri": true
   },
   "package": {
-    "productName": "tauri-api-app",
+    "productName": "tauri-api-clipboard",
     "version": "0.1.0"
   },
   "tauri": {
     "allowlist": {
       "all": true,
-      "app": {
+      "clipboard": {
         "all": true,
-        "show": true,
-        "hide": true
+        "writeText": true,
+        "readText": true
       }
     },
     "bundle": {
@@ -64,7 +64,7 @@
         "fullscreen": false,
         "height": 600,
         "resizable": true,
-        "title": "tauri-api-app",
+        "title": "tauri-api-clipboard",
         "width": 800
       }
     ]
