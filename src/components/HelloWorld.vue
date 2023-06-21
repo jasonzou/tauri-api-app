@@ -1,41 +1,40 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { readText, writeText } from '@tauri-apps/api/clipboard';
+import { ref, onMounted } from 'vue'
+import { getName, getTauriVersion, getVersion, hide, show } from '@tauri-apps/api/app';
 
 
 defineProps<{ msg: string }>()
 
 const count = ref(0)
-const clipboardText = ref("")
+const appname = ref("")
+const appTauriVersion= ref("")
+const appVersion = ref("")
+onMounted(async () => {
+  const res = await getName()
+  appname.value = res
+ 
+  const ver = await getTauriVersion()
+  appTauriVersion.value = ver
+  
+  const appver = await getVersion()
+  appVersion.value = appver
+})
 
-async function copy() {
-  // read from the clipboard
-  console.log("hhhhhhhhh --- in")
-  const text = await readText().catch((error) => { console.log(error) });
-  if (text !== null) {
-    console.log(text)
-    clipboardText.value = text
-    console.log("hhhhhhhhh - paste")
-  }
-  console.log("hhhhhhhhh -- out")
+async function onHide(){
+  console.log("hide clicked")
+  await hide();
 }
-async function paste() {
-  // write to the clipboard
-  console.log("hhhhhhhhh", clipboardText.value)
-  await writeText(clipboardText.value + ' => Tauri is awesome!').catch((error) => {
-    console.log("efforr")
-    console.log(error)
-  })
-
+async function onShow(){
+  console.log("show clicked")
+  await show();
 }
 </script>
 
 <template>
-  <h1>{{ msg }}</h1>
-  <button @click="copy">Get the content from the clipboard</button>
-  <button @click="paste">Change the content of the clipboard</button>
-  <br />
-  <textarea size="60" style="font-size:2rem">{{ clipboardText }}</textarea>
+  <h1>{{ msg }}- {{ appname }} - {{  appTauriVersion }}</h1>
+  <h1>- {{  appVersion }}</h1>
+  <button @click="onHide">Hide</button>
+  <button @click="onShow">Show</button>
 
   <div class="card">
     <button type="button" @click="count++">count is {{ count }}</button>

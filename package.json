@@ -1,5 +1,5 @@
 {
-  "name": "tauri-api-clipboard",
+  "name": "tauri-api-app",
   "private": true,
   "version": "0.0.0",
   "type": "module",
